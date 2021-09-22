@@ -4,6 +4,7 @@ Obter número de telefone a partir do id do usúario
 Obter endereco do usuario
 */
 
+//asfasfasfasfas
 
 function obterUsuario(callback) {
     setTimeout(() => {
