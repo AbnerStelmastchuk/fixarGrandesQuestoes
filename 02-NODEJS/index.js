@@ -6,59 +6,59 @@ Obter endereco do usuario
 
 //Agora é pra valer
 
-function obterUsuario(callback) {
-    setTimeout(() => {
-        return callback(null, {
-            id: 1,
-            nome: 'Aladin',
+const util = require('util')
+const obterEnderecoAsync = util.promisify(endereco)
+
+function usuario(){
+    return new Promise((resolve, reject) => {
+        return resolve({
+            id: 10,
+            nome: 'Abner',
             dataNascimento: new Date()
         })
-    }, 1000)
+    })
 }
-
-function obterTelefoneDoUsuario(idUsuario, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            telefone: '11990002',
-            ddd: 11
-        })
-    }, 2000)
-}
-
-function obterEnderecoDoUsuario(idUsuario, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            rua: 'dos bobos',    
-            numero: 0
-        })
-    }, 2000)
-}
-
-function resolverUsuario(errp, usuario){
-    console.log('Usuario', usuario)
-}
-
-obterUsuario(function resolverUsuario(error, usuario) {
-    if(error) {
-        console.error('DEU RUIM em USUARIO', error)
-        return
-    }
-    obterTelefoneDoUsuario(usuario.id, function resolverTelefone(error1, telefone){
-        if(error1){
-            console.error('DEU RUIM em USUARIO')
-            return
-        }
-        obterEnderecoDoUsuario(usuario.id, function resolverEndereco(error2, endereco) {
-            if(error2){
-                console.error('DEU RUIM em USUARIO')
-                return
-            }
-
-            console.log(`
-            Nome: ${usuario.nome}
-            Endereco: ${endereco.rua}, Numero: ${endereco.numero}
-            Telefone: ${telefone.ddd}, ${telefone.telefone}
-            `)
+function telefone(idUsuario){
+    return new Promise((resolve, reject) => {
+        return resolve({
+            numeroTel: '999604805',
+            ddd: '43'
         })
     })
-})
+}
+function endereco(idUsuario, callback){
+        return callback (null, {
+            rua: 'Rua 8',
+            numero: '145'
+        })
+    }
+
+usuario()
+    .then(function (usuario) {
+        return telefone(usuario.id)
+            .then(function pegarTelefone(result) {
+                return {
+                    usuario: {
+                        nome: usuario.nome,
+                        id: usuario.id
+                    },
+                    telefone: result
+                }
+            })
+    })
+    .then(resultado => {
+        const endereco = obterEnderecoAsync(resultado.usuario.id)
+        return endereco.then(result => {
+            return {
+                usuario: resultado.usuario,
+                telefone: resultado.telefone,
+                endereco: result
+            }
+        })
+    })
+    .then(imprimir => console.log(`
+        Nome: ${imprimir.usuario.nome}
+        Endereco: ${imprimir.endereco.rua}, ${imprimir.endereco.numero}
+        Telefone: ${imprimir.telefone.ddd}, ${imprimir.telefone.numeroTel}
+    `))
+    .catch(error => console.error('Deu Ruim!!!', error))
