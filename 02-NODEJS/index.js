@@ -6,59 +6,49 @@ Obter endereco do usuario
 
 //Agora é pra valer
 
-function obterUsuario(callback) {
-    setTimeout(() => {
-        return callback(null, {
-            id: 1,
-            nome: 'Aladin',
+function usuario(){
+    return new Promise((resolve, reject) => {
+        return resolve({
+            id: 10,
+            nome: 'Abner',
             dataNascimento: new Date()
         })
-    }, 1000)
+    })
 }
 
-function obterTelefoneDoUsuario(idUsuario, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            telefone: '11990002',
-            ddd: 11
-        })
-    }, 2000)
-}
-
-function obterEnderecoDoUsuario(idUsuario, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            rua: 'dos bobos',    
-            numero: 0
-        })
-    }, 2000)
-}
-
-function resolverUsuario(errp, usuario){
-    console.log('Usuario', usuario)
-}
-
-obterUsuario(function resolverUsuario(error, usuario) {
-    if(error) {
-        console.error('DEU RUIM em USUARIO', error)
-        return
-    }
-    obterTelefoneDoUsuario(usuario.id, function resolverTelefone(error1, telefone){
-        if(error1){
-            console.error('DEU RUIM em USUARIO')
-            return
-        }
-        obterEnderecoDoUsuario(usuario.id, function resolverEndereco(error2, endereco) {
-            if(error2){
-                console.error('DEU RUIM em USUARIO')
-                return
-            }
-
-            console.log(`
-            Nome: ${usuario.nome}
-            Endereco: ${endereco.rua}, Numero: ${endereco.numero}
-            Telefone: ${telefone.ddd}, ${telefone.telefone}
-            `)
+function telefone(){
+    return new Promise((resolve, reject) => {
+        return resolve({
+            telefone: '999604805',
+            ddd: '43'
         })
     })
-})
+}
+
+function endereco(){
+    return new Promise((resolve, reject) => {
+        return resolve ({
+            rua: 'Rua 8',
+            numero: '145'
+        })
+    })
+}
+
+async function chamarUsuario(){
+    const chamada = await usuario()
+    usuario().then(usuario => console.log(`O idUser é: ${chamada.id} Nome: ${chamada.nome} DataNasc: ${chamada.dataNascimento}`))
+}
+
+async function chamarTelefone(){
+    const chamada = await telefone()
+    telefone().then(telefone => console.log(`O telefone é: ${chamada.ddd} ${chamada.telefone}`))
+}
+
+async function chamarEndereco(){
+    const chamada = await endereco()
+    endereco().then(endereco => console.log(`O endereço é: ${chamada.rua} Numero:${chamada.numero}`))
+}
+
+chamarUsuario()
+chamarTelefone()
+chamarEndereco()
