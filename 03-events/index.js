@@ -33,4 +33,5 @@ stdin.addListener('data', function (value) {
 }
 main().then(function (resultado) {
     console.log('resultado', resultado.toString())
-}) */  //DANGER! COMMON ERROR
+}) */  //DANGER! COMMON ERROR!
+//Very danger!
