@@ -1,0 +1,20 @@
+{
+  "name": "07-multi-db",
+  "version": "1.0.0",
+  "description": "docker run \\     --name postgres \\     -e POSTGRES_USER=abnerstelmastchuk \\     -e POSTGRES_PASSWORD=minhasenhasecreta \\     -e POSTGRES_DB=heroes \\     -p 5432:5432 \\     postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbnerStelmastchuk/fixarGrandesQuestoes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbnerStelmastchuk/fixarGrandesQuestoes/issues"
+  },
+  "homepage": "https://github.com/AbnerStelmastchuk/fixarGrandesQuestoes#readme"
+}
